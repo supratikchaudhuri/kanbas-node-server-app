@@ -3,6 +3,8 @@ import cors from "cors";
 import Hello from "./hello.js";
 import Lab5 from "./lab5.js";
 import courseRoutes from "./routes/courses.js";
+// import moduleRoutes from "./routes/modules.js";
+import ModuleRoutes from "./modules/routes.js";
 
 const app = express();
 
@@ -22,6 +24,8 @@ Lab5(app);
 Hello(app);
 
 app.use("/api/courses", courseRoutes);
+// app.use("/api/modules", moduleRoutes);
+ModuleRoutes(app);
 
 app.listen(4000, () => {
   console.log("server started on port 4000");
