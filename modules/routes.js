@@ -1,4 +1,5 @@
 import db from "../Database/index.js";
+
 function ModuleRoutes(app) {
   app.get("/api/courses/:cid/modules", (req, res) => {
     try {
