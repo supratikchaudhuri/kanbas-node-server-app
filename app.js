@@ -4,7 +4,6 @@ import cors from "cors";
 import Hello from "./hello.js";
 import Lab5 from "./lab5.js";
 import courseRoutes from "./routes/courses.js";
-// import moduleRoutes from "./routes/modules.js";
 import ModuleRoutes from "./modules/routes.js";
 import AssignmentRoutes from "./assignments/routes.js";
 
