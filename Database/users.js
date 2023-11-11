@@ -99,6 +99,36 @@ const users = [
     dob: "2000-05-11",
     role: "STUDENT",
   },
+  {
+    _id: "131",
+    username: "jack",
+    password: "jack12345",
+    firstName: "Jack",
+    lastName: "Keller",
+    email: "jack@gmail.com",
+    dob: "2000-10-11",
+    role: "STUDENT",
+  },
+  {
+    _id: "132",
+    username: "james",
+    password: "james12345",
+    firstName: "James",
+    lastName: "Bratley",
+    email: "james@gmail.com",
+    dob: "2004-07-14",
+    role: "STUDENT",
+  },
+  {
+    _id: "133",
+    username: "paris",
+    password: "paris12345",
+    firstName: "Paris",
+    lastName: "Morgan",
+    email: "morgan@gmail.com",
+    dob: "2001-05-11",
+    role: "STUDENT",
+  },
 ];
 
 export default users;
