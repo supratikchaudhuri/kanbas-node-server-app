@@ -39,7 +39,7 @@ const Lab5 = (app) => {
   app.get("/api/a5/todos/create", (req, res) => {
     const newTodo = {
       id: new Date().getTime(),
-      title: "New Task",
+      title: `New Task #${todos.length + 1}`,
       completed: false,
     };
     todos.push(newTodo);
