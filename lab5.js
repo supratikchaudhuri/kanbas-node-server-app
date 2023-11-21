@@ -66,6 +66,7 @@ const Lab5 = (app) => {
       res.json(todos);
     }
     todos.splice(todos.indexOf(todo), 1);
+    res.status(200).json(todos);
   });
 
   app.put("/api/a5/todos/:id", (req, res) => {
