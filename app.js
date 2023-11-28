@@ -1,11 +1,13 @@
 import "dotenv/config";
 import express from "express";
+import mongoose, { mongo } from "mongoose";
 import cors from "cors";
 import Hello from "./hello.js";
 import Lab5 from "./lab5.js";
 import courseRoutes from "./routes/courses.js";
 import ModuleRoutes from "./modules/routes.js";
 import AssignmentRoutes from "./assignments/routes.js";
+import UserRoutes from "./users/routes.js";
 
 const app = express();
 
@@ -30,10 +32,18 @@ Lab5(app);
 Hello(app);
 
 app.use("/api/courses", courseRoutes);
-// app.use("/api/modules", moduleRoutes);
 ModuleRoutes(app);
 AssignmentRoutes(app);
+UserRoutes(app);
+
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+mongoose.connection.on("connected", () => {
+  console.log("Success! Connected to MongoDB.");
+});
 
 app.listen(process.env.PORT || 4000, () => {
-  console.log("server started on port 4000");
+  console.log("Server started on port 4000");
 });
