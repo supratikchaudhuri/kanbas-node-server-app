@@ -14,8 +14,11 @@ export const findUserByCredentials = async (username, password) => {
   return userDetails;
 };
 
-export const updateUser = async (userId, user) => {
-  const updtatedUser = await model.updateOne({ _id: userId }, { $set: user });
+export const updateUser = async (userId, updatedUser) => {
+  const updtatedUser = await model.updateOne(
+    { _id: userId },
+    { $set: updatedUser }
+  );
   return updtatedUser;
 };
 

@@ -9,9 +9,10 @@ function UserRoutes(app) {
 
   const updateUser = async (req, res) => {
     const userId = req.params.userId;
-    const user = req.body;
-    const updtatedUser = await dao.updateUser(userId, user);
-    res.json(updateUser);
+    const updatedUser = req.body;
+    const status = await dao.updateUser(userId, updatedUser);
+    currentUser = await dao.findUserById(userId);
+    res.json(status);
   };
 
   const signup = async (req, res) => {};
