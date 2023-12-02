@@ -18,8 +18,10 @@ export const findUserById = async (userId) => {
   return user;
 };
 
-export const findUserByUsername = (username) =>
-  model.findOne({ username: username });
+export const findUserByUsername = async (username) => {
+  const user = await model.findOne({ username: username });
+  return user;
+};
 
 export const findUserByCredentials = async (username, password) => {
   const userDetails = await model.findOne({ username, password });
