@@ -9,7 +9,7 @@ export const createUser = async (user) => {
 };
 
 export const findAllUsers = async () => {
-  const users = await model.find();
+  const users = await model.find({});
   return users;
 };
 
@@ -19,12 +19,20 @@ export const findUserById = async (userId) => {
 };
 
 export const findUserByUsername = async (username) => {
-  const user = await model.findOne({ username: username });
+  const user = await model.findOne({ username: username }).exec();
   return user;
 };
 
 export const findUserByCredentials = async (username, password) => {
-  const userDetails = await model.findOne({ username, password });
+  //   console.log(username);
+  //   console.log(password);
+  const userDetails = await model.findOne({
+    username: username,
+    password: password,
+  });
+  // .exec();
+  //   console.log("userDetails");
+  //   console.log(userDetails);
   return userDetails;
 };
 

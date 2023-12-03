@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import mongoose, { mongo } from "mongoose";
+import session from "express-session";
 import cors from "cors";
 import Hello from "./hello.js";
 import Lab5 from "./lab5.js";
@@ -16,10 +17,24 @@ app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(
   cors({
-    credentials: true,
-    origin: process.env.FRONTEND_URL,
+    credentials: true, // supports cookies
+    origin: process.env.FRONTEND_URL, // restrict cross origin resource sharing to the react application
   })
 );
+
+const sessionOptions = {
+  secret: "any string",
+  resave: false,
+  saveUninitialized: false,
+};
+if (process.env.NODE_ENV !== "development") {
+  sessionOptions.proxy = true;
+  sessionOptions.cookie = {
+    sameSite: "none",
+    secure: true,
+  };
+}
+app.use(session(sessionOptions));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -36,9 +51,10 @@ ModuleRoutes(app);
 AssignmentRoutes(app);
 UserRoutes(app);
 
-mongoose.connect(process.env.MONGODB_URI, {
+const CONNECTION_STRING =
+  process.env.MONGODB_CONNECTION_STRING || process.env.MONGODB_URI;
+mongoose.connect(CONNECTION_STRING, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
 });
 mongoose.connection.on("connected", () => {
   console.log("Success! Connected to MongoDB.");
