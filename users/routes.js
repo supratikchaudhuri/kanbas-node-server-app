@@ -27,6 +27,7 @@ function UserRoutes(app) {
       req.session["currentUser"] = updatedUser;
       await req.session.save();
     }
+
     res.json(status);
   };
 
@@ -38,7 +39,10 @@ function UserRoutes(app) {
       return;
     }
     const currentUser = await dao.createUser(req.body);
+
     req.session["currentUser"] = currentUser;
+    await req.session.save();
+
     res.json(currentUser);
   };
 
@@ -49,13 +53,12 @@ function UserRoutes(app) {
   };
 
   const signin = async (req, res) => {
-    // console.log(req);
     const { username, password } = req.body;
     const currentUser = await dao.findUserByCredentials(username, password);
+
     req.session.currentUser = currentUser;
     await req.session.save();
-    console.log("hrer");
-    console.log(req.session["currentUser"]);
+
     res.json(currentUser);
   };
 
@@ -65,10 +68,8 @@ function UserRoutes(app) {
   };
 
   const account = async (req, res) => {
-    console.log("account");
-    // console.log(req);
-    console.log(req.session); // Log the entire session object
-    console.log(req.session["currentUser"]);
+    // console.log("account");
+    // console.log(req.session["currentUser"]);
     res.json(req.session["currentUser"]);
   };
 

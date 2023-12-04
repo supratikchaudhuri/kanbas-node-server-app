@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import model from "./model.js";
 
 export const createUser = async (user) => {
-  // generate mongodb id string
   user._id = new mongoose.Types.ObjectId().toHexString();
   const newUser = await model.create(user);
   return newUser;
@@ -24,15 +23,10 @@ export const findUserByUsername = async (username) => {
 };
 
 export const findUserByCredentials = async (username, password) => {
-  //   console.log(username);
-  //   console.log(password);
   const userDetails = await model.findOne({
     username: username,
     password: password,
   });
-  // .exec();
-  //   console.log("userDetails");
-  //   console.log(userDetails);
   return userDetails;
 };
 
