@@ -13,13 +13,19 @@ function UserRoutes(app) {
   };
 
   const findUserById = async (req, res) => {
+    console.log("findUserById: ", req.params);
+
     const userId = req.params.userId;
     const user = await dao.findUserById(userId);
+
+    console.log("result", user, "\n\n");
     res.json(user);
   };
 
   const updateUser = async (req, res) => {
     try {
+      console.log("updateUser: ", req.body);
+
       const userId = req.params.userId;
       const updatedUser = req.body;
       const status = await dao.updateUser(userId, updatedUser);
@@ -29,6 +35,7 @@ function UserRoutes(app) {
         await req.session.save();
       }
 
+      console.log("result", status, "\n\n");
       res.json(status);
     } catch (error) {
       console.log(error);
@@ -37,6 +44,8 @@ function UserRoutes(app) {
   };
 
   const signup = async (req, res) => {
+    console.log("signup: ", req.body);
+
     const user = await dao.findUserByUsername(req.body.username);
     if (user) {
       console.log("Username already taken");
@@ -48,26 +57,36 @@ function UserRoutes(app) {
     req.session["currentUser"] = currentUser;
     await req.session.save();
 
+    console.log("result", currentUser, "\n\n");
     res.json(currentUser);
   };
 
   const createUser = async (req, res) => {
+    console.log("createUser: ", req.body);
+
     const user = req.body;
     const newUser = await dao.createUser(user);
+
+    console.log("result", newUser, "\n\n");
     res.json(newUser);
   };
 
   const signin = async (req, res) => {
+    console.log("signin: ", req.body);
+
     const { username, password } = req.body;
     const currentUser = await dao.findUserByCredentials(username, password);
     console.log("signin: ", currentUser);
     req.session.currentUser = currentUser;
     await req.session.save();
 
+    console.log("result", currentUser, "\n\n");
     res.json(currentUser);
   };
 
   const signout = (req, res) => {
+    console.log("signout: ", req.session["currentUser"]);
+
     req.session.destroy();
     res.status(200).json({ message: "Sign out successful" });
   };
