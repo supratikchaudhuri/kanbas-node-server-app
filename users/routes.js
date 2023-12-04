@@ -19,16 +19,21 @@ function UserRoutes(app) {
   };
 
   const updateUser = async (req, res) => {
-    const userId = req.params.userId;
-    const updatedUser = req.body;
-    const status = await dao.updateUser(userId, updatedUser);
+    try {
+      const userId = req.params.userId;
+      const updatedUser = req.body;
+      const status = await dao.updateUser(userId, updatedUser);
 
-    if (updatedUser._id === req.session["currentUser"]._id) {
-      req.session["currentUser"] = updatedUser;
-      await req.session.save();
+      if (updatedUser._id === req.session["currentUser"]._id) {
+        req.session["currentUser"] = updatedUser;
+        await req.session.save();
+      }
+
+      res.json(status);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Unable to update user" });
     }
-
-    res.json(status);
   };
 
   const signup = async (req, res) => {
@@ -55,7 +60,7 @@ function UserRoutes(app) {
   const signin = async (req, res) => {
     const { username, password } = req.body;
     const currentUser = await dao.findUserByCredentials(username, password);
-
+    console.log("signin: ", currentUser);
     req.session.currentUser = currentUser;
     await req.session.save();
 
@@ -68,8 +73,7 @@ function UserRoutes(app) {
   };
 
   const account = async (req, res) => {
-    // console.log("account");
-    // console.log(req.session["currentUser"]);
+    console.log("account: ", req.session["currentUser"]);
     res.json(req.session["currentUser"]);
   };
 

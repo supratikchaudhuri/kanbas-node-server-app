@@ -31,11 +31,15 @@ export const findUserByCredentials = async (username, password) => {
 };
 
 export const updateUser = async (userId, updatedUser) => {
-  const updtatedUser = await model.updateOne(
-    { _id: userId },
-    { $set: updatedUser }
-  );
-  return updtatedUser;
+  try {
+    const updtatedUser = await model.updateOne(
+      { _id: userId },
+      { $set: updatedUser }
+    );
+    return updtatedUser;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const deleteUser = async (userId) => {
